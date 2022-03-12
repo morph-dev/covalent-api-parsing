@@ -48,40 +48,54 @@ function parseComponent(componentName: string, componentJson: JSONObject, api: A
   }
 }
 
-function parseProperty(propertyName: string, propertyObject: JSONObject, api: Api): Property {
+function parseProperty(propertyName: string, propertyJson: JSONObject, api: Api): Property {
   let type: PropertyType | undefined
+  let format = propertyJson.format as string
   let array = false
-  switch (propertyObject.type) {
+  switch (propertyJson.type) {
     case 'string':
     case 'number':
     case 'boolean':
-      type = propertyObject.type
+      type = propertyJson.type
       break
     case 'integer':
-      type = 'number'
+      switch (format) {
+        case 'int32':
+        case 'int64':
+          type = 'number'
+          break
+        case undefined:
+          type = 'string'
+          format = 'integer'
+          break
+        default:
+          throw Error(
+            `Unexpected format for integer: ${propertyName} ${JSON.stringify(propertyJson)}`
+          )
+      }
       break
     case 'object':
       type = 'unknown'
       break
     case 'array':
-      type = getArrayType(propertyObject, api)
+      type = getArrayType(propertyJson, api)
       array = true
       break
     case undefined:
-      type = api.components[getComponentName(propertyObject['$ref'] as string)]
+      type = api.components[getComponentName(propertyJson['$ref'] as string)]
       break
     default:
-      throw Error(`Unexpected property type for ${propertyName}: ${JSON.stringify(propertyObject)}`)
+      throw Error(`Unexpected property type for ${propertyName}: ${JSON.stringify(propertyJson)}`)
   }
   if (!type) {
-    throw Error(`Can't parse property: ${propertyObject}`)
+    throw Error(`Can't parse property: ${propertyJson}`)
   }
   return {
     name: propertyName,
     type: type,
-    description: propertyObject.description as string,
+    description: propertyJson.description as string,
     array: array,
-    format: propertyObject.format as string,
+    format: format,
   }
 }
 

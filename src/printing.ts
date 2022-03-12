@@ -44,12 +44,9 @@ export function writeCommonComponents(
 export function writeApi(
   api: Api,
   commonComponentNames: string[],
-  filename?: string,
+  mainComponentName?: string,
   commonFilename = 'common.ts'
 ) {
-  if (filename === undefined) {
-    filename = `${api.mainComponentName}.ts`
-  }
   if (commonFilename.endsWith('.ts')) {
     commonFilename = commonFilename.slice(0, -3)
   }
@@ -73,16 +70,22 @@ export function writeApi(
   }
 
   // mainComponent
-  const mainComponent = components.get(api.mainComponentName)
+  let mainComponent = components.get(api.mainComponentName)
   if (mainComponent === undefined) {
     throw Error(`Main component ${api.mainComponentName} not found!`)
+  }
+  if (mainComponentName !== undefined) {
+    if (mainComponentName.length > 0) {
+      mainComponent = { ...mainComponent }
+      mainComponent.name = mainComponentName
+    }
   }
   sections.push(getHeaderString(api) + componentToString(mainComponent))
   components.delete(api.mainComponentName)
 
   sections.push(...Array.from(components.values()).map(componentToString))
 
-  const path = getPath(filename)
+  const path = getPath(`${mainComponent.name}.ts`)
   console.log(`Writing api to ${path}`)
   fs.writeFileSync(path, sections.join('\n'))
 }
