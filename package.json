@@ -6,9 +6,9 @@
   "private": true,
   "scripts": {
     "eslint": "eslint .",
-    "compile": "tsc --noEmit",
+    "compile": "tsc",
     "lint": "yarn compile && yarn eslint",
-    "start": "yarn ts-node index.ts"
+    "start": "yarn ts-node src/index.ts"
   },
   "devDependencies": {
     "@types/node": "^17.0.21",
