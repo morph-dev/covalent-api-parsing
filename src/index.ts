@@ -69,17 +69,17 @@ export function findDuplicateMainComponents(apis: Api[]) {
   }
 }
 
-export function printToFile(apis: Api[], mainComponents: string[]) {
-  // Single version, non-top
-  const commonComponents = [
-    'ContractMetadata',
-    'Pagination',
-    'UniswapToken',
-    'UniswapTokenWithSupply',
-    'UniswapV2BalanceItem',
-  ]
+export function printToFile(
+  apis: Api[],
+  commonComponents: string[],
+  apiMainComponents: string[],
+  customApi: Record<string, string>
+) {
+  // common components
   writeCommonComponents(apis, commonComponents, 'common.ts')
-  for (const name of mainComponents) {
+
+  // main components - must be unique
+  for (const name of apiMainComponents) {
     const matchingApis = apis.filter((api) => api.mainComponentName === name)
     if (matchingApis.length > 1) {
       throw Error(`Multiple apis found for name ${name}`)
@@ -90,11 +90,40 @@ export function printToFile(apis: Api[], mainComponents: string[]) {
     const api = matchingApis[0]
     writeApi(api, commonComponents)
   }
+
+  // custom main components
+  for (const path in customApi) {
+    const api = apis.find((api) => api.path == path)
+    if (api === undefined) {
+      throw Error(`Can't find api with path ${path}`)
+    }
+    writeApi(api, commonComponents, customApi[path])
+  }
 }
 
 const json = jsonFile as unknown as JSONObject[]
-const apis = json.map(parseApi)
+let apis = json.map(parseApi)
+
+// filter Class B, non xy=k
+apis = apis.filter((api) => {
+  if (api.classType === 'Class B' && api.classSubType !== 'xy=k') {
+    console.log(`Removing ${api.mainComponentName} ${api.path}`)
+    return false
+  }
+  return true
+})
+console.log()
 
 printSummaries(apis, true)
 // findDuplicateMainComponents(apis)
-printToFile(apis, ['AddressWithHistoricalPricesItem'])
+
+const commonComponents = [
+  'ContractMetadata',
+  'Pagination',
+  'UniswapToken',
+  'UniswapTokenWithSupply',
+  'UniswapV2BalanceItem',
+]
+const apiMainComponents = [] as string[]
+const customApi = {}
+printToFile(apis, commonComponents, apiMainComponents, customApi)

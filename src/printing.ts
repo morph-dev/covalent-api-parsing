@@ -102,7 +102,11 @@ function getHeaderString(api: Api): string {
 export function componentToString(component: Component): string {
   const lines = []
   lines.push(`export type ${component.name} = {\n`)
-  lines.push(...component.properties.map(propertyToString))
+  if (component.properties.length > 0) {
+    lines.push(...component.properties.map(propertyToString))
+  } else {
+    lines.push('  [index: string]: undefined\n')
+  }
   lines.push(`}\n`)
   return lines.join('')
 }

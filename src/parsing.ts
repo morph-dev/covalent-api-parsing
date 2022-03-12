@@ -10,6 +10,8 @@ export function parseApi(apiJson: JSONObject): Api {
     title: apiJson.title as string,
     description: apiJson.description as string,
     mainComponentName: responseJson.name as string,
+    classType: apiJson.classType as string,
+    classSubType: apiJson.classSubType as string,
     components: {},
   }
   // console.log(`Parsing api: ${api.path}`)

@@ -28,5 +28,7 @@ export type Api = {
   title: string
   description: string
   mainComponentName: string
+  classType: string
+  classSubType: string
   components: Record<string, Component>
 }
