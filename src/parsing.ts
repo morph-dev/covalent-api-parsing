@@ -49,29 +49,20 @@ function parseComponent(componentName: string, componentJson: JSONObject, api: A
 }
 
 function parseProperty(propertyName: string, propertyJson: JSONObject, api: Api): Property {
+  const format = propertyJson.format as string
   let type: PropertyType | undefined
-  let format = propertyJson.format as string
   let array = false
   switch (propertyJson.type) {
     case 'string':
-    case 'number':
     case 'boolean':
       type = propertyJson.type
       break
+    case 'number':
     case 'integer':
-      switch (format) {
-        case 'int32':
-        case 'int64':
-          type = 'number'
-          break
-        case undefined:
-          type = 'string'
-          format = 'integer'
-          break
-        default:
-          throw Error(
-            `Unexpected format for integer: ${propertyName} ${JSON.stringify(propertyJson)}`
-          )
+      if (format === 'float') {
+        type = 'number'
+      } else {
+        type = 'number | string'
       }
       break
     case 'object':
@@ -114,7 +105,7 @@ function getArrayType(propertyJson: JSONObject, api: Api): PropertyType {
     case 'string':
       return items.type as PropertyType
     case 'integer':
-      return 'number'
+      return 'number | string'
     case 'object':
       return 'unknown'
   }

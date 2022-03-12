@@ -8,12 +8,18 @@ export type JSONObject = {
 }
 
 // Parsed
-export type PropertyType = 'boolean' | 'number' | 'string' | 'unknown' | Component
+export type PropertyType =
+  | 'boolean'
+  | 'number'
+  | 'number | string'
+  | 'string'
+  | 'unknown'
+  | Component
 
 export type Property = {
   name: string
   type: PropertyType
-  array?: boolean
+  array: boolean
   description?: string
   format?: string
 }
