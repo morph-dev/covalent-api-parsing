@@ -1,4 +1,4 @@
-import { Api, Property, PropertyType, JSONObject } from './model'
+import { Api, JSONObject, Property, PropertyType } from './model'
 
 export function parseApi(apiJson: JSONObject): Api {
   const responseJson = apiJson.response as JSONObject
