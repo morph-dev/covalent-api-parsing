@@ -76,8 +76,8 @@ One of the following options can be used for additional print:
 
 Steps for obtaining file:
 
-1. Open [https://www.covalenthq.com/docs/api/]() page
-1. Inspect page (F12 in Chrome)
+1. Open [https://www.covalenthq.com/docs/api/]()
+1. Inspect page's source (e.g. `Ctrl+U` in Chrome)
 1. Locate `<body><scripts>` and there should be `window.openAPICache` field
 1. Copy it's value into some more powerful editor
     - I used: *Visual Studio Code*
