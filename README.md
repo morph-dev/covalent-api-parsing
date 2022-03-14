@@ -1,5 +1,7 @@
 This project parses Covalent API JSON file and creates typescript types for desired apis.
 
+JSON file is located at `./schemas/schemas.json`
+
 # CAUTION: Types in the JSON might not match real types.
 
 At the moment of writting, there is at least one api that is completely wrong.
