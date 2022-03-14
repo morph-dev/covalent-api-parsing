@@ -1,5 +1,5 @@
 {
-  "outDir": "out",
+  "outDir": "rugzy_out",
   "commonComponents": ["ContractMetadata", "Pagination"],
   "commonFile": "common",
   "apis": [
@@ -12,7 +12,19 @@
       "componentName": ""
     },
     {
+      "path": "/v1/:chain_id/tokens/:address/token_holders/",
+      "componentName": ""
+    },
+    {
+      "path": "/v1/:chain_id/xy=k/:dexname/address/:address/transactions/",
+      "componentName": ""
+    },
+    {
       "path": "/v1/:chain_id/nft_market/",
+      "componentName": ""
+    },
+    {
+      "path": "/v1/:chain_id/nft_market/collection/:collection_address/",
       "componentName": ""
     }
   ]
