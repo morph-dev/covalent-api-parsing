@@ -5777,7 +5777,7 @@
       },
       {
         "choices": [],
-        "description": "Additional topic hash(es) to filter on -- padded & unpadded address fields are supported.",
+        "description": "Additional topic hash(es) to filter on -- padded \u0026 unpadded address fields are supported.",
         "global": false,
         "name": "secondary-topics",
         "pathParam": false,
