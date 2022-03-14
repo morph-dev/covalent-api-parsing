@@ -1,129 +1,134 @@
 import jsonFile from '../schemas/schemas.json'
+import configJson from '../config.json'
+import minimist from 'minimist'
+import fs from 'fs'
 
 import { Api, JSONObject } from './model'
 import { parseApi } from './parsing'
 import { writeApi, writeCommonComponents } from './printing'
-import { getComponentSummaries } from './summary'
+import { printSummaries } from './summary'
 
-export function printSummaries(apis: Api[], single_version = true) {
-  if (single_version) {
-    console.log('Printing only single versions!')
-    console.log('count\ttoplevel\tname')
-    console.log('\t\t\ttoplevelpath')
-    console.log('-'.repeat(100))
-  } else {
-    console.log('Printing only non-single versions!')
-    console.log('count\tversions\tname')
-    console.log('\t\tv_count\tpath')
-    console.log('-'.repeat(100))
-  }
-
-  const summaries = Object.values(getComponentSummaries(apis))
-  summaries.sort((a, b) => {
-    if (a.count != b.count) {
-      return b.count - a.count
+export function writeToFiles(apis: Api[], force: boolean): boolean {
+  const apisToWrite = [] as [Api, string][]
+  // prepare Apis to write
+  for (const apiConfig of configJson.apis) {
+    const api = apis.find((api) => api.path == apiConfig.path)
+    if (api === undefined) {
+      console.error(`Can't find api with path ${apiConfig.path}`)
+      return false
     }
-    return Object.keys(b.versions).length - Object.keys(a.versions).length
-  })
-  for (const summary of summaries) {
-    const name = summary.componentName
-    const versions = Object.values(summary.versions)
-    if (single_version && versions.length == 1) {
-      const topLevelApis = versions[0].apis.filter((api) => name === api.mainComponentName)
-      console.log(`${summary.count}\t${topLevelApis.length}\t${name}`)
-      topLevelApis.map((api) => console.log(`\t\t\t${api.path}`))
-    } else if (!single_version && versions.length > 1) {
-      console.log([summary.count, versions.length, name].join('\t'))
-      for (const version of versions) {
-        console.log(
-          [
-            '',
-            '',
-            version.count,
-            version.apis.map((api) => ` ${api.mainComponentName} ${api.path}`).join('\n\t\t\t'),
-          ].join('\t')
+    const componentName: string = apiConfig.componentName
+      ? apiConfig.componentName
+      : api.mainComponentName
+
+    // If not force, check that componentName is not default of some other api
+    if (!force) {
+      const duplicateApis = apis.filter(
+        (api_filter) => api !== api_filter && api_filter.mainComponentName === componentName
+      )
+      if (duplicateApis.length > 0) {
+        console.error(
+          `Api "${apiConfig.path}" is supposted to be written with "${componentName}" as main component`
         )
+        console.error(
+          `This is not recommended because following apis have that component as their main!`
+        )
+        console.table(duplicateApis.map((duplicateApi) => duplicateApi.path))
+        console.error(`If you really want to write it like this, use --force`)
+        return false
       }
     }
+    apisToWrite.push([api, componentName])
   }
-  console.log()
-}
-
-export function findDuplicateMainComponents(apis: Api[]) {
-  const groupped: Record<string, Api[]> = {}
-  for (const api of apis) {
-    const name = api.mainComponentName
-    if (!(name in groupped)) {
-      groupped[name] = []
-    }
-    groupped[name].push(api)
-  }
-
-  for (const name in groupped) {
-    if (groupped[name].length == 1) continue
-    console.log(name)
-    for (const api of groupped[name]) {
-      console.log(`\t${api.path}`)
-    }
-    console.log()
-  }
-}
-
-export function printToFile(
-  apis: Api[],
-  commonComponents: string[],
-  apiMainComponents: string[],
-  customApi: Record<string, string>
-) {
-  // common components
-  writeCommonComponents(apis, commonComponents, 'common.ts')
-
-  // main components - must be unique
-  for (const name of apiMainComponents) {
-    const matchingApis = apis.filter((api) => api.mainComponentName === name)
-    if (matchingApis.length > 1) {
-      throw Error(`Multiple apis found for name ${name}`)
-    }
-    if (matchingApis.length === 0) {
-      throw Error(`No apis found for name ${name}`)
-    }
-    const api = matchingApis[0]
-    writeApi(api, commonComponents)
-  }
-
-  // custom main components
-  for (const path in customApi) {
-    const api = apis.find((api) => api.path == path)
-    if (api === undefined) {
-      throw Error(`Can't find api with path ${path}`)
-    }
-    writeApi(api, commonComponents, customApi[path])
-  }
-}
-
-const json = jsonFile as unknown as JSONObject[]
-let apis = json.map(parseApi)
-
-// filter Class B, non xy=k
-apis = apis.filter((api) => {
-  if (api.classType === 'Class B' && api.classSubType !== 'xy=k') {
-    console.log(`Removing ${api.mainComponentName} ${api.path}`)
+  // Check for duplicates for writting
+  if (apisToWrite.map(([, name]) => name).some((name, index, all) => index != all.indexOf(name))) {
+    console.error(`Multiple APIs with the same main component name to write.`)
+    console.table(
+      apisToWrite
+        .map(([api, componentName]) => {
+          return {
+            componentName: componentName,
+            path: api.path,
+          }
+        })
+        .sort()
+    )
     return false
   }
+
+  // deleting existing content (if any)
+  if (fs.existsSync(configJson.outDir)) {
+    console.warn(`Deleting content of "${configJson.outDir}"`)
+    fs.rmSync(configJson.outDir, { recursive: true })
+  }
+  // common components
+  writeCommonComponents(apis)
+  // write Apis
+  for (const [api, componentName] of apisToWrite) {
+    writeApi(api, componentName)
+  }
   return true
-})
-console.log()
+}
 
-printSummaries(apis, true)
-// findDuplicateMainComponents(apis)
+function main() {
+  // Parse command line flags
+  const argv = minimist(process.argv.slice(2), {
+    string: ['component'],
+    boolean: ['filterDexSpecific', 'force'],
+    unknown: (flag) => {
+      if (['list', 'summary'].includes(flag)) {
+        return true
+      }
+      console.error(`Unexpected flag: ${flag}`)
+      process.exit(1)
+    },
+  })
 
-const commonComponents = [
-  'ContractMetadata',
-  'Pagination',
-  'UniswapToken',
-  'UniswapTokenWithSupply',
-  'UniswapV2BalanceItem',
-]
-const apiMainComponents = [] as string[]
-const customApi = {}
-printToFile(apis, commonComponents, apiMainComponents, customApi)
+  // Parse JSON
+  const json = jsonFile as unknown as JSONObject[]
+  let apis = json.map(parseApi).sort((a, b) => a.path.localeCompare(b.path))
+
+  // Filter filterDexSpecific APIs
+  if (argv['filterDexSpecific']) {
+    // filter Class B, non xy=k
+    console.log('Filtering dex specific Api-s.')
+    apis = apis.filter((api) => {
+      if (api.classType === 'Class B' && api.classSubType !== 'xy=k') {
+        console.log(`Removing ${api.mainComponentName} ${api.path}`)
+        return false
+      }
+      return true
+    })
+    console.log()
+  }
+
+  // Print summary and ext
+  if (argv._.includes('list')) {
+    apis
+      .map((api) =>
+        [
+          api.path,
+          api.title,
+          api.description,
+          `class: ${api.classType}${api.classSubType && ` (subclass: ${api.classSubType})`}`,
+          `main component: ${api.mainComponentName}`,
+          '',
+        ].join('\n\t')
+      )
+      .forEach((s) => console.log(s))
+    return
+  }
+
+  // Print summary and ext
+  if (argv._.includes('summary')) {
+    printSummaries(apis, argv['component'] as string)
+    return
+  }
+
+  // Write APIs to files
+  if (writeToFiles(apis, !!argv['force'])) {
+    process.exit(1)
+  }
+}
+
+main()

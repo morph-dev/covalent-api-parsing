@@ -1,22 +1,26 @@
+import configJson from '../config.json'
 import { Api, Component, Property } from './model'
 import * as fs from 'fs'
 
-function getPath(filename: string): string {
-  fs.mkdirSync('out', { recursive: true })
-  return `./out/${filename}`
+function getNoEditNotice(): string {
+  return '// DO NOT EDIT - THIS FILE IS AUTO GENERATED\n// see README.md\n'
 }
 
-export function writeCommonComponents(
-  apis: Api[],
-  commonComponentNames: string[],
-  filename = 'common.ts'
-) {
+function getPath(filename: string): string {
+  const directory = configJson.outDir
+  fs.mkdirSync(directory, { recursive: true })
+  return `${directory}/${filename}.ts`
+}
+
+export function writeCommonComponents(apis: Api[]) {
+  const commonComponentNames: string[] = configJson.commonComponents
   const commonComponents: Record<string, Api[]> = {}
   for (const name of commonComponentNames) {
     commonComponents[name] = apis.filter((api) => name in api.components)
   }
+  const noEditNotice = getNoEditNotice()
 
-  const commonComponenStrings = Object.entries(commonComponents).map(([name, componentApis]) => {
+  const commonComponentStrings = Object.entries(commonComponents).map(([name, componentApis]) => {
     // header
     const topLevelApis = componentApis.filter((api) => api.mainComponentName === name)
     if (topLevelApis.length > 1) {
@@ -36,24 +40,21 @@ export function writeCommonComponents(
     }
     return header + componentStrings[0]
   })
-  const path = getPath(filename)
-  console.log(`Writing common components to ${path}`)
-  fs.writeFileSync(path, commonComponenStrings.join('\n'))
+
+  const path = getPath(configJson.commonFile)
+  console.log(`Writing common components to "${path}"`)
+  fs.writeFileSync(path, noEditNotice + '\n' + commonComponentStrings.join('\n'))
 }
 
-export function writeApi(
-  api: Api,
-  commonComponentNames: string[],
-  mainComponentName?: string,
-  commonFilename = 'common.ts'
-) {
-  if (commonFilename.endsWith('.ts')) {
-    commonFilename = commonFilename.slice(0, -3)
-  }
+export function writeApi(api: Api, mainComponentName?: string) {
+  const commonComponentNames: string[] = configJson.commonComponents
 
   const sections = [] as string[]
 
   const components = new Map(Object.entries(api.components))
+
+  // no edit notice
+  sections.push(getNoEditNotice())
 
   // common components
   const commonComponentsUsed = [] as string[]
@@ -66,7 +67,9 @@ export function writeApi(
   // import
   if (commonComponentsUsed.length > 0) {
     commonComponentsUsed.sort()
-    sections.push(`import { ${commonComponentsUsed.join(', ')} } from './${commonFilename}'\n`)
+    sections.push(
+      `import { ${commonComponentsUsed.join(', ')} } from './${configJson.commonFile}'\n`
+    )
   }
 
   // mainComponent
@@ -85,8 +88,8 @@ export function writeApi(
 
   sections.push(...Array.from(components.values()).map(componentToString))
 
-  const path = getPath(`${mainComponent.name}.ts`)
-  console.log(`Writing api to ${path}`)
+  const path = getPath(`${mainComponent.name}`)
+  console.log(`Writing api to "${path}"`)
   fs.writeFileSync(path, sections.join('\n'))
 }
 

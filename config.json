@@ -1,0 +1,19 @@
+{
+  "outDir": "out",
+  "commonComponents": ["ContractMetadata", "Pagination"],
+  "commonFile": "common",
+  "apis": [
+    {
+      "path": "/v1/:chain_id/address/:address/balances_v2/",
+      "componentName": "TokenBalancesForAddress"
+    },
+    {
+      "path": "/v1/pricing/historical_by_addresses_v2/:chain_id/:quote_currency/:contract_addresses/",
+      "componentName": ""
+    },
+    {
+      "path": "/v1/:chain_id/nft_market/",
+      "componentName": ""
+    }
+  ]
+}

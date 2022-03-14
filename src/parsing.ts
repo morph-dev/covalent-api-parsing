@@ -100,16 +100,13 @@ function getArrayType(propertyJson: JSONObject, api: Api): PropertyType {
     return component
   }
   switch (items.type) {
-    case 'boolean':
-    case 'number':
     case 'string':
       return items.type as PropertyType
-    case 'integer':
-      return 'number | string'
     case 'object':
       return 'unknown'
+    default:
+      throw Error(`Unexpected array type: ${JSON.stringify(propertyJson)}`)
   }
-  throw Error(`Can't figure out array type: ${JSON.stringify(propertyJson)}`)
 }
 
 function getComponentName(ref: string): string {
