@@ -16,6 +16,10 @@
       "componentName": ""
     },
     {
+      "path": "/v1/:chain_id/xy=k/:dexname/tokens/",
+      "componentName": ""
+    },
+    {
       "path": "/v1/:chain_id/xy=k/:dexname/address/:address/transactions/",
       "componentName": ""
     },

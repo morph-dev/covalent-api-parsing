@@ -30,16 +30,66 @@ export type NftMarketCapDetailedViewItem = {
   collection_name: string
   /** Smart contract ticker symbol. */
   collection_ticker_symbol: string
+  /** The Image URL of the Fifth NFT in this collection. */
+  fifth_nft_image: string
+  /** The Image URL of the Fifth NFT in this collection (resized to 1024x1024). */
+  fifth_nft_image_1024: string
+  /** The Image URL of the Fifth NFT in this collection (resized to 256x256). */
+  fifth_nft_image_256: string
+  /** The Image URL of the Fifth NFT in this collection (resized to 512x512). */
+  fifth_nft_image_512: string
+  /** The Token Id for the Image URL of the Fifth NFT in this collection. */
+  fifth_nft_image_token_id: string
+  /** The Image URL of the First NFT in this collection. */
+  first_nft_image: string
+  /** The Image URL of the First NFT in this collection (resized to 1024x1024). */
+  first_nft_image_1024: string
+  /** The Image URL of the First NFT in this collection (resized to 256x256). */
+  first_nft_image_256: string
+  /** The Image URL of the First NFT in this collection (resized to 512x512). */
+  first_nft_image_512: string
+  /** The Token Id for the Image URL of the First NFT in this collection. */
+  first_nft_image_token_id: string
   /** The minimum average sale within the last 7 days defined as floor price in quote currency. (format: float) */
   floor_price_quote_7d: number
   /** The minimum average sale within the last 7 days defined as floor price in WEI. */
   floor_price_wei_7d: number | string
+  /** The Image URL of the Fourth NFT in this collection. */
+  fourth_nft_image: string
+  /** The Image URL of the Fourth NFT in this collection (resized to 1024x1024). */
+  fourth_nft_image_1024: string
+  /** The Image URL of the Fourth NFT in this collection (resized to 256x256). */
+  fourth_nft_image_256: string
+  /** The Image URL of the Fourth NFT in this collection (resized to 512x512). */
+  fourth_nft_image_512: string
+  /** The Token Id for the Image URL of the Fourth NFT in this collection. */
+  fourth_nft_image_token_id: string
   /** The current spot exchange rate in `quote-currency`. (format: float) */
   gas_quote_rate_day: number
   /** Date recorded for Market Cap. (format: date) */
   opening_date: string
   /** The requested fiat currency. */
   quote_currency: string
+  /** The Image URL of the Second NFT in this collection. */
+  second_nft_image: string
+  /** The Image URL of the Second NFT in this collection (resized to 1024x1024). */
+  second_nft_image_1024: string
+  /** The Image URL of the Second NFT in this collection (resized to 256x256). */
+  second_nft_image_256: string
+  /** The Image URL of the Second NFT in this collection (resized to 512x512). */
+  second_nft_image_512: string
+  /** The Token Id for the Image URL of the Second NFT in this collection. */
+  second_nft_image_token_id: string
+  /** The Image URL of the Third NFT in this collection. */
+  third_nft_image: string
+  /** The Image URL of the Third NFT in this collection (resized to 1024x1024). */
+  third_nft_image_1024: string
+  /** The Image URL of the Third NFT in this collection (resized to 256x256). */
+  third_nft_image_256: string
+  /** The Image URL of the Third NFT in this collection (resized to 512x512). */
+  third_nft_image_512: string
+  /** The Token Id for the Image URL of the Third NFT in this collection. */
+  third_nft_image_token_id: string
   /** Amount of distinct token ids sold. (format: int64) */
   unique_token_ids_sold_count_day: number | string
   /** Volume of sale within that day in quote currency. (format: float) */

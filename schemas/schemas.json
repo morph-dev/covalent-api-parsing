@@ -622,7 +622,7 @@
         "type": "integer"
       }
     ],
-    "path": "/v1/pricing/historical_by_addresses_v2/:chain_id/:quote_currency/",
+    "path": "/v1/pricing/historical_by_addresses_v2/:chain_id/:quote_currency/:contract_addresses/",
     "realTime": false,
     "released_at": "",
     "response": {

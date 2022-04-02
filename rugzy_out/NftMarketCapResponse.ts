@@ -38,6 +38,8 @@ export type NftMarketGlobalItem = {
   first_nft_image_256: string
   /** The Image URL of the First NFT in this collection (resized to 512x512). */
   first_nft_image_512: string
+  /** The Token Id for the Image URL of the First NFT in this collection. */
+  first_nft_image_token_id: string
   /** The minimum average sale within the last 7 days defined as floor price in quote currency. (format: float) */
   floor_price_quote_7d: number
   /** The minimum average sale within the last 7 days defined as floor price in WEI. */
