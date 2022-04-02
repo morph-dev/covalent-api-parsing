@@ -21,7 +21,7 @@ export type TokenBalancesForAddress = {
 }
 
 export type INFTMetadata = {
-  [index: string]: undefined
+  [index: string]: unknown
 }
 
 export type WalletBalanceItem = {
