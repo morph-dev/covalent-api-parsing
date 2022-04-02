@@ -111,7 +111,7 @@ export function componentToString(component: Component): string {
   if (component.properties.length > 0) {
     lines.push(...component.properties.map(propertyToString))
   } else {
-    lines.push('  [index: string]: undefined\n')
+    lines.push('  [index: string]: unknown\n')
   }
   lines.push(`}\n`)
   return lines.join('')
