@@ -622,7 +622,7 @@
         "type": "integer"
       }
     ],
-    "path": "/v1/pricing/historical_by_addresses_v2/:chain_id/:quote_currency/:contract_addresses/",
+    "path": "/v1/pricing/historical_by_addresses_v2/:chain_id/:quote_currency/",
     "realTime": false,
     "released_at": "",
     "response": {
@@ -5329,6 +5329,22 @@
         "supportedChains": [
           "bsc-mainnet"
         ]
+      },
+      {
+        "id": "mimo",
+        "logoURL": "https://www.covalenthq.com/static/images/dex-logos/Mimo.png",
+        "name": "Mimo",
+        "supportedChains": [
+          "iotex-mainnet"
+        ]
+      },
+      {
+        "id": "claimswap",
+        "logoURL": "https://www.covalenthq.com/static/images/dex-logos/Claimswap.png",
+        "name": "Claimswap",
+        "supportedChains": [
+          "klaytn-mainnet"
+        ]
       }
     ],
     "templates": [],
@@ -5729,6 +5745,22 @@
         "name": "MoonLift",
         "supportedChains": [
           "bsc-mainnet"
+        ]
+      },
+      {
+        "id": "mimo",
+        "logoURL": "https://www.covalenthq.com/static/images/dex-logos/Mimo.png",
+        "name": "Mimo",
+        "supportedChains": [
+          "iotex-mainnet"
+        ]
+      },
+      {
+        "id": "claimswap",
+        "logoURL": "https://www.covalenthq.com/static/images/dex-logos/Claimswap.png",
+        "name": "Claimswap",
+        "supportedChains": [
+          "klaytn-mainnet"
         ]
       }
     ],
@@ -6427,6 +6459,22 @@
         "name": "MoonLift",
         "supportedChains": [
           "bsc-mainnet"
+        ]
+      },
+      {
+        "id": "mimo",
+        "logoURL": "https://www.covalenthq.com/static/images/dex-logos/Mimo.png",
+        "name": "Mimo",
+        "supportedChains": [
+          "iotex-mainnet"
+        ]
+      },
+      {
+        "id": "claimswap",
+        "logoURL": "https://www.covalenthq.com/static/images/dex-logos/Claimswap.png",
+        "name": "Claimswap",
+        "supportedChains": [
+          "klaytn-mainnet"
         ]
       }
     ],
@@ -7179,6 +7227,22 @@
         "name": "MoonLift",
         "supportedChains": [
           "bsc-mainnet"
+        ]
+      },
+      {
+        "id": "mimo",
+        "logoURL": "https://www.covalenthq.com/static/images/dex-logos/Mimo.png",
+        "name": "Mimo",
+        "supportedChains": [
+          "iotex-mainnet"
+        ]
+      },
+      {
+        "id": "claimswap",
+        "logoURL": "https://www.covalenthq.com/static/images/dex-logos/Claimswap.png",
+        "name": "Claimswap",
+        "supportedChains": [
+          "klaytn-mainnet"
         ]
       }
     ],
@@ -8128,6 +8192,22 @@
         "supportedChains": [
           "bsc-mainnet"
         ]
+      },
+      {
+        "id": "mimo",
+        "logoURL": "https://www.covalenthq.com/static/images/dex-logos/Mimo.png",
+        "name": "Mimo",
+        "supportedChains": [
+          "iotex-mainnet"
+        ]
+      },
+      {
+        "id": "claimswap",
+        "logoURL": "https://www.covalenthq.com/static/images/dex-logos/Claimswap.png",
+        "name": "Claimswap",
+        "supportedChains": [
+          "klaytn-mainnet"
+        ]
       }
     ],
     "templates": [],
@@ -8502,6 +8582,22 @@
         "name": "MoonLift",
         "supportedChains": [
           "bsc-mainnet"
+        ]
+      },
+      {
+        "id": "mimo",
+        "logoURL": "https://www.covalenthq.com/static/images/dex-logos/Mimo.png",
+        "name": "Mimo",
+        "supportedChains": [
+          "iotex-mainnet"
+        ]
+      },
+      {
+        "id": "claimswap",
+        "logoURL": "https://www.covalenthq.com/static/images/dex-logos/Claimswap.png",
+        "name": "Claimswap",
+        "supportedChains": [
+          "klaytn-mainnet"
         ]
       }
     ],
@@ -9338,6 +9434,22 @@
         "supportedChains": [
           "bsc-mainnet"
         ]
+      },
+      {
+        "id": "mimo",
+        "logoURL": "https://www.covalenthq.com/static/images/dex-logos/Mimo.png",
+        "name": "Mimo",
+        "supportedChains": [
+          "iotex-mainnet"
+        ]
+      },
+      {
+        "id": "claimswap",
+        "logoURL": "https://www.covalenthq.com/static/images/dex-logos/Claimswap.png",
+        "name": "Claimswap",
+        "supportedChains": [
+          "klaytn-mainnet"
+        ]
       }
     ],
     "templates": [],
@@ -9741,6 +9853,10 @@
               "description": "The Image URL of the First NFT in this collection (resized to 512x512).",
               "type": "string"
             },
+            "first_nft_image_token_id": {
+              "description": "The Token Id for the Image URL of the First NFT in this collection.",
+              "type": "string"
+            },
             "floor_price_quote_7d": {
               "description": "The minimum average sale within the last 7 days defined as floor price in quote currency.",
               "format": "float",
@@ -9874,7 +9990,6 @@
         "name": "NFTrade",
         "supportedChains": [
           "eth-mainnet",
-          "bsc-mainnet",
           "avalanche-mainnet",
           "matic-mainnet",
           "moonbeam-moonriver"
@@ -9894,8 +10009,7 @@
         "name": "Refinable",
         "supportedChains": [
           "eth-mainnet",
-          "matic-mainnet",
-          "bsc-mainnet"
+          "matic-mainnet"
         ]
       },
       {
@@ -9948,6 +10062,47 @@
           "moonbeam-moonriver",
           "arbitrum-mainnet",
           "avalanche-mainnet"
+        ]
+      },
+      {
+        "id": "decentraland",
+        "logoURL": "https://www.covalenthq.com/static/images/nft-marketplaces/Decentraland.png",
+        "name": "Decentraland",
+        "supportedChains": [
+          "eth-mainnet",
+          "matic-mainnet"
+        ]
+      },
+      {
+        "id": "superrare",
+        "logoURL": "https://www.covalenthq.com/static/images/nft-marketplaces/SuperRare.png",
+        "name": "SuperRare",
+        "supportedChains": [
+          "eth-mainnet"
+        ]
+      },
+      {
+        "id": "axie-infinity",
+        "logoURL": "https://www.covalenthq.com/static/images/nft-marketplaces/AxieInfinity.png",
+        "name": "Axie Infinity",
+        "supportedChains": [
+          "axie-mainnet"
+        ]
+      },
+      {
+        "id": "zora",
+        "logoURL": "https://www.covalenthq.com/static/images/nft-marketplaces/Zora.png",
+        "name": "Zora",
+        "supportedChains": [
+          "eth-mainnet"
+        ]
+      },
+      {
+        "id": "playdapp",
+        "logoURL": "https://www.covalenthq.com/static/images/nft-marketplaces/PlayDapp.png",
+        "name": "PlayDapp",
+        "supportedChains": [
+          "eth-mainnet"
         ]
       }
     ],
@@ -10334,6 +10489,22 @@
         "supportedChains": [
           "bsc-mainnet"
         ]
+      },
+      {
+        "id": "mimo",
+        "logoURL": "https://www.covalenthq.com/static/images/dex-logos/Mimo.png",
+        "name": "Mimo",
+        "supportedChains": [
+          "iotex-mainnet"
+        ]
+      },
+      {
+        "id": "claimswap",
+        "logoURL": "https://www.covalenthq.com/static/images/dex-logos/Claimswap.png",
+        "name": "Claimswap",
+        "supportedChains": [
+          "klaytn-mainnet"
+        ]
       }
     ],
     "templates": [],
@@ -10707,6 +10878,22 @@
         "supportedChains": [
           "bsc-mainnet"
         ]
+      },
+      {
+        "id": "mimo",
+        "logoURL": "https://www.covalenthq.com/static/images/dex-logos/Mimo.png",
+        "name": "Mimo",
+        "supportedChains": [
+          "iotex-mainnet"
+        ]
+      },
+      {
+        "id": "claimswap",
+        "logoURL": "https://www.covalenthq.com/static/images/dex-logos/Claimswap.png",
+        "name": "Claimswap",
+        "supportedChains": [
+          "klaytn-mainnet"
+        ]
       }
     ],
     "templates": [],
@@ -10822,6 +11009,46 @@
               "description": "Smart contract ticker symbol.",
               "type": "string"
             },
+            "fifth_nft_image": {
+              "description": "The Image URL of the Fifth NFT in this collection.",
+              "type": "string"
+            },
+            "fifth_nft_image_1024": {
+              "description": "The Image URL of the Fifth NFT in this collection (resized to 1024x1024).",
+              "type": "string"
+            },
+            "fifth_nft_image_256": {
+              "description": "The Image URL of the Fifth NFT in this collection (resized to 256x256).",
+              "type": "string"
+            },
+            "fifth_nft_image_512": {
+              "description": "The Image URL of the Fifth NFT in this collection (resized to 512x512).",
+              "type": "string"
+            },
+            "fifth_nft_image_token_id": {
+              "description": "The Token Id for the Image URL of the Fifth NFT in this collection.",
+              "type": "string"
+            },
+            "first_nft_image": {
+              "description": "The Image URL of the First NFT in this collection.",
+              "type": "string"
+            },
+            "first_nft_image_1024": {
+              "description": "The Image URL of the First NFT in this collection (resized to 1024x1024).",
+              "type": "string"
+            },
+            "first_nft_image_256": {
+              "description": "The Image URL of the First NFT in this collection (resized to 256x256).",
+              "type": "string"
+            },
+            "first_nft_image_512": {
+              "description": "The Image URL of the First NFT in this collection (resized to 512x512).",
+              "type": "string"
+            },
+            "first_nft_image_token_id": {
+              "description": "The Token Id for the Image URL of the First NFT in this collection.",
+              "type": "string"
+            },
             "floor_price_quote_7d": {
               "description": "The minimum average sale within the last 7 days defined as floor price in quote currency.",
               "format": "float",
@@ -10830,6 +11057,26 @@
             "floor_price_wei_7d": {
               "description": "The minimum average sale within the last 7 days defined as floor price in WEI.",
               "type": "number"
+            },
+            "fourth_nft_image": {
+              "description": "The Image URL of the Fourth NFT in this collection.",
+              "type": "string"
+            },
+            "fourth_nft_image_1024": {
+              "description": "The Image URL of the Fourth NFT in this collection (resized to 1024x1024).",
+              "type": "string"
+            },
+            "fourth_nft_image_256": {
+              "description": "The Image URL of the Fourth NFT in this collection (resized to 256x256).",
+              "type": "string"
+            },
+            "fourth_nft_image_512": {
+              "description": "The Image URL of the Fourth NFT in this collection (resized to 512x512).",
+              "type": "string"
+            },
+            "fourth_nft_image_token_id": {
+              "description": "The Token Id for the Image URL of the Fourth NFT in this collection.",
+              "type": "string"
             },
             "gas_quote_rate_day": {
               "description": "The current spot exchange rate in `quote-currency`.",
@@ -10843,6 +11090,46 @@
             },
             "quote_currency": {
               "description": "The requested fiat currency.",
+              "type": "string"
+            },
+            "second_nft_image": {
+              "description": "The Image URL of the Second NFT in this collection.",
+              "type": "string"
+            },
+            "second_nft_image_1024": {
+              "description": "The Image URL of the Second NFT in this collection (resized to 1024x1024).",
+              "type": "string"
+            },
+            "second_nft_image_256": {
+              "description": "The Image URL of the Second NFT in this collection (resized to 256x256).",
+              "type": "string"
+            },
+            "second_nft_image_512": {
+              "description": "The Image URL of the Second NFT in this collection (resized to 512x512).",
+              "type": "string"
+            },
+            "second_nft_image_token_id": {
+              "description": "The Token Id for the Image URL of the Second NFT in this collection.",
+              "type": "string"
+            },
+            "third_nft_image": {
+              "description": "The Image URL of the Third NFT in this collection.",
+              "type": "string"
+            },
+            "third_nft_image_1024": {
+              "description": "The Image URL of the Third NFT in this collection (resized to 1024x1024).",
+              "type": "string"
+            },
+            "third_nft_image_256": {
+              "description": "The Image URL of the Third NFT in this collection (resized to 256x256).",
+              "type": "string"
+            },
+            "third_nft_image_512": {
+              "description": "The Image URL of the Third NFT in this collection (resized to 512x512).",
+              "type": "string"
+            },
+            "third_nft_image_token_id": {
+              "description": "The Token Id for the Image URL of the Third NFT in this collection.",
               "type": "string"
             },
             "unique_token_ids_sold_count_day": {
@@ -11022,6 +11309,47 @@
           "moonbeam-moonriver",
           "arbitrum-mainnet",
           "avalanche-mainnet"
+        ]
+      },
+      {
+        "id": "decentraland",
+        "logoURL": "https://www.covalenthq.com/static/images/nft-marketplaces/Decentraland.png",
+        "name": "Decentraland",
+        "supportedChains": [
+          "eth-mainnet",
+          "matic-mainnet"
+        ]
+      },
+      {
+        "id": "superrare",
+        "logoURL": "https://www.covalenthq.com/static/images/nft-marketplaces/SuperRare.png",
+        "name": "SuperRare",
+        "supportedChains": [
+          "eth-mainnet"
+        ]
+      },
+      {
+        "id": "axie-infinity",
+        "logoURL": "https://www.covalenthq.com/static/images/nft-marketplaces/AxieInfinity.png",
+        "name": "Axie Infinity",
+        "supportedChains": [
+          "axie-mainnet"
+        ]
+      },
+      {
+        "id": "zora",
+        "logoURL": "https://www.covalenthq.com/static/images/nft-marketplaces/Zora.png",
+        "name": "Zora",
+        "supportedChains": [
+          "eth-mainnet"
+        ]
+      },
+      {
+        "id": "playdapp",
+        "logoURL": "https://www.covalenthq.com/static/images/nft-marketplaces/PlayDapp.png",
+        "name": "PlayDapp",
+        "supportedChains": [
+          "eth-mainnet"
         ]
       }
     ],
@@ -11330,6 +11658,22 @@
         "name": "MoonLift",
         "supportedChains": [
           "bsc-mainnet"
+        ]
+      },
+      {
+        "id": "mimo",
+        "logoURL": "https://www.covalenthq.com/static/images/dex-logos/Mimo.png",
+        "name": "Mimo",
+        "supportedChains": [
+          "iotex-mainnet"
+        ]
+      },
+      {
+        "id": "claimswap",
+        "logoURL": "https://www.covalenthq.com/static/images/dex-logos/Claimswap.png",
+        "name": "Claimswap",
+        "supportedChains": [
+          "klaytn-mainnet"
         ]
       }
     ],
